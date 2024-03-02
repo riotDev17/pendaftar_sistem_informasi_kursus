@@ -1,8 +1,8 @@
-import { requestGetPenghasilan } from '../api/penghasilan/services/requestGetPenghasilan';
+import { requestGetKursus } from '../api/kursus/services/requestGetKursus';
 import { useEffect, useState } from 'react';
 import SelectSearch from '../components/forms/Select/SelectSearch';
 
-interface PenghasilanSelectProps {
+interface KursusSelectProps {
   id: string;
   name: string;
   label: string;
@@ -13,16 +13,16 @@ interface PenghasilanSelectProps {
   onChange: (e: any) => void;
 }
 
-const PenghasilanSelect = ({ id, name, label, placeholder, error, isInputFilled, onChange, value }: PenghasilanSelectProps) => {
-  const [penghasilan, setPenghasilan] = useState<any[]>([]);
+const KursusSelect = ({ id, name, label, placeholder, error, isInputFilled, onChange, value }: KursusSelectProps) => {
+  const [kursus, setKursus] = useState<any[]>([]);
 
   useEffect(() => {
-    requestGetPenghasilan().then((response) => {
+    requestGetKursus().then((response) => {
       const transformedData = response.map((item: any) => ({
-        value: item.id_penghasilan,
-        label: item.jumlah_penghasilan,
+        value: item.id_kursus,
+        label: item.nama_kursus,
       }));
-      setPenghasilan(transformedData);
+      setKursus(transformedData);
     });
   }, []);
 
@@ -41,9 +41,9 @@ const PenghasilanSelect = ({ id, name, label, placeholder, error, isInputFilled,
 
   return (
     <>
-      <SelectSearch id={id} name={name} label={label} styles={styles} value={value} onChange={onChange} placeholder={placeholder} options={penghasilan} error={error} isInputFilled={isInputFilled} />
+      <SelectSearch id={id} name={name} label={label} styles={styles} value={value} onChange={onChange} placeholder={placeholder} options={kursus} error={error} isInputFilled={isInputFilled} />
     </>
   );
 };
 
-export default PenghasilanSelect;
+export default KursusSelect;
